@@ -1,14 +1,35 @@
-import React from 'react';
+import React, { useState,useContext } from 'react';
 
 import Logo from '../../olx-logo.png';
+import { FirebaseContext } from '../../store/FirebaseContext';
 import './Signup.css';
 
+
+
+
 export default function Signup() {
+const [username,setUsernaem]=useState('')
+const [email,setEmail]=useState('')
+const [phone,setPhone]=useState('')
+const [password,setPasssword]=useState('')
+
+
+const {firebase}= useContext(FirebaseContext)
+
+const submitHandler=(e)=>{
+  e.preventDefault()
+  console.log(firebase);
+
+  
+    
+
+  }
+  
   return (
-    <div>
+    <div >
       <div className="signupParentDiv">
         <img width="200px" height="200px" src={Logo}></img>
-        <form>
+        <form onSubmit={submitHandler}>
           <label htmlFor="fname">Username</label>
           <br />
           <input
@@ -17,6 +38,7 @@ export default function Signup() {
             id="fname"
             name="name"
             defaultValue="John"
+             onChange={(e)=>setUsernaem(e.target.value)}
           />
           <br />
           <label htmlFor="fname">Email</label>
