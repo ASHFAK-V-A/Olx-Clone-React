@@ -4,6 +4,7 @@ import './App.css';
 import Signup from './Pages/Signup'
 import Login from './Pages/Login'
 import { useEffect,useContext } from 'react';
+import Create from './Pages/Create'
 /**
  * ?  =====Import Components=====
  */
@@ -33,6 +34,10 @@ firebase.auth().onAuthStateChanged((user)=>{
        <Route path='/login'>
         <Login />
        </Route>
+       <Route path='/create'>
+        <Create />
+       </Route>
+       
       </Router>
   
     </div>
