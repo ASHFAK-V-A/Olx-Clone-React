@@ -1,14 +1,33 @@
 import React from 'react';
+import { FirebaseContext } from '../../store/FirebaseContext';
 
+import { useState,useContext } from 'react';
 import Logo from '../../olx-logo.png';
 import './Login.css';
-
+import 'firebase/auth'
+import { useHistory } from 'react-router-dom';
 function Login() {
+
+  let [email,setEmail]=useState('')
+  let [password,setPasssword]=useState('')
+const {firebase}=useContext(FirebaseContext)
+const history=useHistory()
+
+ const submitHandler=((e)=>{
+  e.preventDefault()
+  firebase.auth().signInWithEmailAndPassword(email,password).then(()=>{
+   history.push('/')
+  }).catch((error)=>{
+    alert(error.message)
+  })
+ })
+
+
   return (
     <div>
       <div className="loginParentDiv">
         <img width="200px" height="200px" src={Logo}></img>
-        <form>
+        <form onSubmit={submitHandler}>
           <label htmlFor="fname">Email</label>
           <br />
           <input
@@ -16,7 +35,9 @@ function Login() {
             type="email"
             id="fname"
             name="email"
+            value={email}
             defaultValue="John"
+            onChange={(e)=>setEmail(e.target.value)}
           />
           <br />
           <label htmlFor="lname">Password</label>
@@ -26,7 +47,9 @@ function Login() {
             type="password"
             id="lname"
             name="password"
+            value={password}
             defaultValue="Doe"
+            onChange={(e)=>setPasssword(e.target.value)}
           />
           <br />
           <br />

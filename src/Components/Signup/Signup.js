@@ -3,7 +3,7 @@ import React, { useState,useContext } from 'react';
 import Logo from '../../olx-logo.png';
 import { FirebaseContext } from '../../store/FirebaseContext';
 import './Signup.css';
-
+import { useHistory } from 'react-router-dom';
 
 
 
@@ -12,16 +12,24 @@ const [username,setUsernaem]=useState('')
 const [email,setEmail]=useState('')
 const [phone,setPhone]=useState('')
 const [password,setPasssword]=useState('')
-
+const history=useHistory()
 
 const {firebase}= useContext(FirebaseContext)
 
 const submitHandler=(e)=>{
   e.preventDefault()
-  console.log(firebase);
+firebase.auth().createUserWithEmailAndPassword(email,password).then((result)=>{
+  result.user.updateProfile({displayName:username}).then(()=>{
+    firebase.firestore().collection('user').add({
+      idL:result.user.uid,
+      username:username,
+      phone:phone
+    }).then(()=>{
+      history.push('/login')
 
-  
-    
+    })
+  })
+})
 
   }
   
@@ -49,6 +57,8 @@ const submitHandler=(e)=>{
             id="fname"
             name="email"
             defaultValue="John"
+            onChange={(e)=>setEmail(e.target.value)}
+            
           />
           <br />
           <label htmlFor="lname">Phone</label>
@@ -59,6 +69,8 @@ const submitHandler=(e)=>{
             id="lname"
             name="phone"
             defaultValue="Doe"
+            onChange={(e)=>setPhone(e.target.value)}
+            
           />
           <br />
           <label htmlFor="lname">Password</label>
@@ -69,6 +81,9 @@ const submitHandler=(e)=>{
             id="lname"
             name="password"
             defaultValue="Doe"
+            onChange={(e)=>setPasssword(e.target.value)}
+            
+
           />
           <br />
           <br />
