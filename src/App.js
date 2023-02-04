@@ -12,7 +12,7 @@ import Create from './Pages/Create';
 import Home from './Pages/Home';
 import { AuthContext, FirebaseContext } from './store/FirebaseContext';
 import ViewPost from './Pages/ViewPost';
-import Post from './store/FirebaseContext'
+import Post from './store/PostContext'
 
 
 function App() {
